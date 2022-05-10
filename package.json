@@ -1,0 +1,25 @@
+{
+  "name": "metascraper-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "feras mohamed",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "metascraper": "^5.29.3",
+    "metascraper-author": "^5.29.3",
+    "metascraper-clearbit": "^5.29.3",
+    "metascraper-date": "^5.29.3",
+    "metascraper-description": "^5.29.3",
+    "metascraper-image": "^5.29.3",
+    "metascraper-logo": "^5.29.3",
+    "metascraper-publisher": "^5.29.3",
+    "metascraper-title": "^5.29.3",
+    "metascraper-url": "^5.29.3"
+  }
+}
