@@ -1,6 +1,9 @@
 const express = require('express')
+const serverless = require("serverless-http");
+
 const app = express()
 const port = 3000
+const router = express.Router();
 
 const metascraper = require('metascraper')([
   require('metascraper-author')(),
@@ -19,7 +22,7 @@ const axios = require('axios')
 
 
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
 
   //res.send(req.query);
 
@@ -32,7 +35,7 @@ app.get('/', (req, res) => {
           timeout: 15000,
           retry: { limit: 0, methods: ["GET", "POST"] }
       };
-      //const { body: html, url } = 
+      //const { body: html, url } =
         await got(targetUrl,options).then(async ({body: html, url})=>{
           console.log(html);
           metadata = await metascraper({ html, url })
@@ -45,7 +48,7 @@ app.get('/', (req, res) => {
             message:"page/domain invalid"
           })
         })
-      
+
       })()
     }else{
       res.json({
@@ -62,6 +65,11 @@ app.get('/', (req, res) => {
   }
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
+// })
+
+app.use(`/.netlify/functions/api`, router);
+
+module.exports = app;
+module.exports.handler = serverless(app);
