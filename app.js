@@ -1,9 +1,8 @@
 const express = require('express')
-const serverless = require("serverless-http");
 
 const app = express()
 const port = 3000
-const router = express.Router();
+// const router = express.Router();
 
 const metascraper = require('metascraper')([
   require('metascraper-author')(),
@@ -22,7 +21,7 @@ const axios = require('axios')
 
 
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
 
   //res.send(req.query);
 
@@ -65,11 +64,6 @@ router.get('/', (req, res) => {
   }
 })
 
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`)
-// })
-
-app.use(`/.netlify/functions/api`, router);
-
-module.exports = app;
-module.exports.handler = serverless(app);
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
