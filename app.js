@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
             (async () => {
                 const targetUrl = params.url//"https://bolceno.com/"
                 const scrape = params.scrape;
+                console.log(params)
                 const options = {
                     timeout: 15000,
                     retry: {limit: 0, methods: ["GET", "POST"]},
@@ -40,12 +41,12 @@ app.get('/', (req, res) => {
                 //const { body: html, url } =
                 await got(targetUrl, options).then(async ({body: html, url}) => {
                     console.log(html);
-                    if (scrape){
-                        metadata = await metascraper({html, url})
+                    if (scrape==true){
+                        let metadata = await metascraper({html, url})
                         // console.log(metadata)
                         res.json(metadata)
                     }else{
-                        res.json(html)
+                        res.send(html)
                     }
 
                 }).catch((error) => {
