@@ -29,8 +29,8 @@ app.get('/', (req, res) => {
         if (params.hasOwnProperty('url') && params.url != null) {
             (async () => {
                 const targetUrl = params.url//"https://bolceno.com/"
-                const scrape = params.scrape;
-                console.log("params"+JSON.stringify(params))
+                const type = (params.hasOwnProperty('type') && params.type === 'xml') ? 'xml' : 'meta';
+                console.log("params" + JSON.stringify(params))
                 const options = {
                     timeout: 15000,
                     retry: {limit: 0, methods: ["GET", "POST"]},
@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
                 //const { body: html, url } =
                 await got(targetUrl, options).then(async ({body: html, url}) => {
                     // console.log(html);
-                    if (scrape === true) {
+                    if (type === 'meta') {
                         let metadata = await metascraper({html, url})
                         // console.log(metadata)
                         res.json(metadata)
