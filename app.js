@@ -41,15 +41,16 @@ app.get('/', (req, res) => {
                 //const { body: html, url } =
                 await got(targetUrl, options).then(async ({body: html, url}) => {
                     // console.log(html);
-                    if (type === 'meta') {
-                        let metadata = await metascraper({html, url})
-                        // console.log(metadata)
-                        res.json(metadata)
-                    } else {
+                    if (type === 'xml') {
                         res.json({
                             'url': url,
                             'content': html
                         })
+                    } else {
+                        let metadata = await metascraper({html, url})
+                        // console.log(metadata)
+                        res.json(metadata)
+
                     }
 
                 }).catch((error) => {
