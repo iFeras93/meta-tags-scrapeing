@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
         if (params.hasOwnProperty('url') && params.url != null) {
             (async () => {
                 const targetUrl = params.url//"https://bolceno.com/"
+                const scrape = params.scrape;
                 const options = {
                     timeout: 15000,
                     retry: {limit: 0, methods: ["GET", "POST"]},
@@ -39,9 +40,14 @@ app.get('/', (req, res) => {
                 //const { body: html, url } =
                 await got(targetUrl, options).then(async ({body: html, url}) => {
                     console.log(html);
-                    metadata = await metascraper({html, url})
-                    console.log(metadata)
-                    res.json(metadata)
+                    if (scrape){
+                        metadata = await metascraper({html, url})
+                        // console.log(metadata)
+                        res.json(metadata)
+                    }else{
+                        res.json(html)
+                    }
+
                 }).catch((error) => {
                     console.log(error);
                     res.json({
